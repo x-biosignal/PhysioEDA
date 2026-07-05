@@ -1,0 +1,49 @@
+Package: PhysioEDA
+Title: Electrodermal Activity Analysis for PhysioExperiment Objects
+Version: 0.2.0
+Authors@R:
+    person(given = "Yusuke",
+           family = "Matsui",
+           role = c("aut", "cre"),
+           email = "mail.to.matsui@gmail.com")
+Author: Yusuke Matsui
+Maintainer: Yusuke Matsui <mail.to.matsui@gmail.com>
+Description: Provides electrodermal activity (EDA / skin conductance) analysis
+    functions for PhysioExperiment objects. Includes preprocessing (filtering,
+    downsampling), artifact detection and correction, tonic/phasic decomposition
+    (highpass, median, CDA, cvxEDA), SCR peak detection, feature extraction,
+    data transformations, signal quality assessment, visualization, and
+    event-related SCR analysis.
+Depends:
+    R (>= 4.2),
+    PhysioCore
+Imports:
+    SummarizedExperiment,
+    S4Vectors,
+    grDevices,
+    graphics,
+    stats
+Suggests:
+    testthat (>= 3.2.0),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Collate:
+    'eda-simulate.R'
+    'eda-data.R'
+    'eda-artifact.R'
+    'eda-preprocess.R'
+    'eda-cda.R'
+    'eda-cvxeda.R'
+    'eda-decompose.R'
+    'eda-peaks.R'
+    'eda-features.R'
+    'eda-event.R'
+    'eda-plot.R'
+    'eda-quality.R'
+    'eda-transform.R'
+    'zzz.R'
+RoxygenNote: 7.3.3
