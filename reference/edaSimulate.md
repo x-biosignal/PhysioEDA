@@ -56,7 +56,7 @@ edaSimulate(
 ## Value
 
 A
-[`PhysioExperiment`](https://rdrr.io/pkg/PhysioCore/man/PhysioExperiment.html)
+[`PhysioExperiment`](https://x-biosignal.github.io/PhysioCore//reference/PhysioExperiment.html)
 object with a single `"raw"` assay containing the simulated EDA signal
 (time x channels matrix). Channel metadata has `type = "EDA"` and
 `unit = "uS"`. The sampling rate is set to `sr`. The ground-truth

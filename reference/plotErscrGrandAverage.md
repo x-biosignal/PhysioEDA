@@ -7,7 +7,7 @@ baseline corrected against the pre-event `baseline` interval, epochs are
 averaged within a condition, and the band is the standard error of the
 mean scaled to `ci_level` (Boucsein 2012; Bach event-related SCR
 averaging). The epoching reuses the event onsets from
-[`PhysioCore::getEvents()`](https://rdrr.io/pkg/PhysioCore/man/getEvents.html)
+[`PhysioCore::getEvents()`](https://x-biosignal.github.io/PhysioCore//reference/getEvents.html)
 on the same sample grid as
 [`edaErscr()`](https://x-biosignal.github.io/PhysioEDA/reference/edaErscr.md).
 

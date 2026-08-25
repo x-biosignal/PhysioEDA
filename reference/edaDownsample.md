@@ -28,7 +28,7 @@ edaDownsample(x, target_sr, assay_name = NULL)
 ## Value
 
 A new
-[`PhysioExperiment`](https://rdrr.io/pkg/PhysioCore/man/PhysioExperiment.html)
+[`PhysioExperiment`](https://x-biosignal.github.io/PhysioCore//reference/PhysioExperiment.html)
 with the downsampled signal in the `"raw"` assay and the sampling rate
 set to the actual achieved rate. Events are preserved. Downsampling
 parameters are stored in `metadata(x)$eda_downsample` (a list with

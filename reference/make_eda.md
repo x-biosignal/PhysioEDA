@@ -27,7 +27,7 @@ make_eda(n_time = 6000, n_channels = 1, sr = 10)
 ## Value
 
 A
-[`PhysioExperiment`](https://rdrr.io/pkg/PhysioCore/man/PhysioExperiment.html)
+[`PhysioExperiment`](https://x-biosignal.github.io/PhysioCore//reference/PhysioExperiment.html)
 object with a single `"raw"` assay containing simulated EDA data.
 Channel metadata has `type = "EDA"` and `unit = "uS"`.
 

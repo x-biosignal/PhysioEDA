@@ -105,7 +105,7 @@ edaArtifact(
 ## Value
 
 A modified
-[`PhysioExperiment`](https://rdrr.io/pkg/PhysioCore/man/PhysioExperiment.html)
+[`PhysioExperiment`](https://x-biosignal.github.io/PhysioCore//reference/PhysioExperiment.html)
 with artifact information stored in `metadata(x)$eda_artifacts`, a list
 containing:
 
