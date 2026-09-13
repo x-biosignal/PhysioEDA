@@ -106,7 +106,7 @@ fit <- edaDCM(pe, ev, refine_latency = FALSE)
 fit$estimates
 #>   event onset onset_refined     amplitude
 #> 1     1    10            10  2.864800e-01
-#> 2     2    30            30 -2.775558e-17
-#> 3     3    50            50 -3.112554e-17
+#> 2     2    30            30  0.000000e+00
+#> 3     3    50            50 -4.356157e-18
 #> 4     4    70            70  8.186079e-03
 ```

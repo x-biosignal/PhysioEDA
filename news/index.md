@@ -1,5 +1,15 @@
 # Changelog
 
+## PhysioEDA 0.2.3
+
+- [`edaDecompose()`](https://x-biosignal.github.io/PhysioEDA/reference/edaDecompose.md)
+  no longer errors when the input `PhysioExperiment` carries column
+  names / `colData` (i.e. any object from a real reader such as
+  `readWFDB` or `readEDF`): the new tonic/phasic assays are now stored
+  with `assays(x, withDimnames = FALSE) <- ...`. Previously it stopped
+  with “please use ‘assay(x, withDimnames=FALSE) \<-’ …”. No change to
+  the computed components.
+
 ## PhysioEDA 0.2.2
 
 - [`edaErscr()`](https://x-biosignal.github.io/PhysioEDA/reference/edaErscr.md)
