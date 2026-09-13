@@ -1,0 +1,251 @@
+---
+title: "EDA Analysis: Preprocessing, Decomposition, and SCR Detection"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{EDA Analysis: Preprocessing, Decomposition, and SCR Detection}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+## Introduction
+
+PhysioEDA provides a complete pipeline for electrodermal activity (EDA) signal
+analysis built on the PhysioExperiment data model. This vignette walks through
+the core analysis workflow: generating or loading EDA data, preprocessing
+(filtering, artifact correction), tonic/phasic decomposition, SCR peak
+detection, and feature extraction.
+
+EDA, also known as galvanic skin response (GSR), reflects sympathetic nervous
+system arousal through changes in skin conductance. The signal can be separated
+into a slowly varying tonic component (skin conductance level, SCL) and rapid
+phasic responses (skin conductance responses, SCR).
+
+## Creating or Loading EDA Data
+
+PhysioEDA provides convenience functions for generating simulated EDA data. For
+real data, use the I/O functions from PhysioIO.
+
+```{r create-data}
+library(PhysioEDA)
+
+# Generate a simulated EDA signal (10 minutes at 10 Hz, 1 channel)
+x <- make_eda(n_time = 6000, n_channels = 1, sr = 10)
+x
+
+# Generate EDA with embedded stimulus events
+x_event <- make_eda_with_scr(n_time = 6000, sr = 10, n_events = 4)
+```
+
+## Signal Quality Assessment
+
+Before processing, it is important to check signal quality. The `edaQuality()`
+function computes metrics including flatline detection, artifact percentage,
+signal-to-noise ratio, and an overall quality score.
+
+```{r quality}
+quality <- edaQuality(x)
+quality
+```
+
+The quality score ranges from 0 to 100. Signals scored as "good" (>= 70) can
+proceed directly to analysis, while "acceptable" (>= 40) signals may benefit
+from artifact correction. "Poor" signals (< 40) should be examined manually.
+
+## Preprocessing
+
+### Filtering
+
+EDA signals are typically lowpass filtered to remove high-frequency noise. The
+`edaFilter()` function uses FFT-based filtering with smooth frequency-domain
+transitions.
+
+```{r filter}
+# Lowpass filter at 1 Hz to remove high-frequency noise
+x <- edaFilter(x, type = "lowpass", cutoff = 1.0)
+
+# The filtered signal is stored in a new assay
+SummarizedExperiment::assayNames(x)
+```
+
+### Downsampling
+
+If the original sampling rate is higher than needed (e.g., 256 Hz), downsample
+to a rate suitable for EDA analysis (typically 4-10 Hz). Anti-aliasing filtering
+is applied automatically.
+
+```{r downsample}
+# Downsample to 4 Hz (only needed if original rate is higher)
+# x <- edaDownsample(x, target_sr = 4)
+```
+
+### Artifact Detection and Correction
+
+The `edaArtifact()` function detects artifacts using threshold, gradient, and
+flatline methods, and can correct them via linear interpolation.
+
+```{r artifact}
+# Detect and correct artifacts
+x <- edaArtifact(x,
+  methods = c("threshold", "gradient", "flatline"),
+  threshold_range = c(0.001, 60),
+  correct = "interpolate",
+  output_assay = "cleaned"
+)
+
+# View artifact summary
+S4Vectors::metadata(x)$eda_artifacts$summary
+```
+
+## Tonic/Phasic Decomposition
+
+The central step in EDA analysis is separating the signal into tonic (SCL) and
+phasic (SCR) components. PhysioEDA supports four decomposition methods.
+
+### Highpass Method
+
+The simplest approach uses FFT-based frequency separation. Suitable for quick
+analyses when physiological accuracy of the tonic component is not critical.
+
+```{r decompose-highpass}
+x_hp <- edaDecompose(x, method = "highpass", cutoff = 0.05)
+```
+
+### Median Filter Method
+
+Uses a sliding median window to estimate the tonic component. More robust to
+outliers than the highpass method.
+
+```{r decompose-median}
+x_med <- edaDecompose(x, method = "median", window_sec = 4)
+```
+
+### Continuous Decomposition Analysis (CDA)
+
+Implements the method of Benedek and Kaernbach (2010). Deconvolves the signal
+with a biexponential (Bateman) impulse response function to recover the
+underlying sudomotor nerve activity driver signal.
+
+```{r decompose-cda}
+x_cda <- edaDecompose(x, method = "cda", tau1 = 0.75, tau2 = 2.0)
+```
+
+### cvxEDA
+
+Implements a simplified version of the convex optimization approach by Greco
+et al. (2016). Uses iterative ADMM with Wiener deconvolution and L1 sparsity
+on the driver signal.
+
+```{r decompose-cvxeda}
+x_cvx <- edaDecompose(x, method = "cvxeda", tau1 = 0.75, tau2 = 2.0,
+                       alpha = 0.01, gamma = 0.1)
+```
+
+### Visualizing the Decomposition
+
+```{r plot-decompose}
+plotDecompose(x_cda, channel = 1)
+```
+
+## SCR Peak Detection
+
+After decomposition, SCR peaks can be detected in the phasic component using
+either a gradient-based or amplitude threshold method.
+
+```{r peaks}
+# Detect peaks using the gradient (zero-crossing) method
+peaks <- edaPeaks(x_cda, method = "gradient", amplitude_min = 0.01)
+peaks
+
+# Visualize detected peaks
+plotPeaks(x_cda, peaks = peaks, channel = 1)
+```
+
+## Feature Extraction
+
+The `edaFeatures()` function computes summary statistics per channel, including
+SCR count, rate, mean amplitude, mean SCL, and area under the phasic curve.
+
+```{r features}
+features <- edaFeatures(x_cda)
+features
+```
+
+You can also restrict feature extraction to a specific time window:
+
+```{r features-window}
+features_win <- edaFeatures(x_cda, window = c(100, 400))
+features_win
+```
+
+## Data Transformation
+
+For statistical analyses that assume normality, EDA data can be transformed
+using log, square root, z-score, or range normalization.
+
+```{r transform}
+# Log transform to reduce skewness
+x_log <- edaTransform(x, method = "log")
+
+# Z-score standardization
+x_z <- edaTransform(x, method = "zscore")
+
+# Reverse the transformation
+x_orig <- edaUntransform(x_log)
+```
+
+## Plotting the Raw Signal
+
+```{r plot-eda}
+# Plot the full EDA time series
+plotEda(x, main = "Raw EDA Signal")
+
+# Plot a specific time window
+plotEda(x, time_range = c(100, 300), main = "EDA Signal (100-300 s)")
+```
+
+## Complete Pipeline Example
+
+```{r pipeline}
+library(PhysioEDA)
+
+# Step 1: Load or simulate data
+x <- make_eda(n_time = 6000, sr = 10)
+
+# Step 2: Check quality
+quality <- edaQuality(x)
+
+# Step 3: Artifact correction
+x <- edaArtifact(x, correct = "interpolate")
+
+# Step 4: Decompose into tonic and phasic
+x <- edaDecompose(x, method = "cda")
+
+# Step 5: Detect SCR peaks
+peaks <- edaPeaks(x)
+
+# Step 6: Extract features
+features <- edaFeatures(x, peaks = peaks)
+
+# Step 7: Visualize
+plotDecompose(x, channel = 1)
+plotPeaks(x, peaks = peaks, channel = 1)
+```
+
+## References
+
+- Boucsein, W. (2012). *Electrodermal Activity*. 2nd ed. Springer.
+- Benedek, M., & Kaernbach, C. (2010). A continuous measure of phasic
+  electrodermal activity. *Journal of Neuroscience Methods*, 190(1), 80-91.
+- Greco, A., et al. (2016). cvxEDA: A convex optimization approach to
+  electrodermal activity processing. *IEEE Transactions on Biomedical
+  Engineering*, 63(4), 797-804.
+
+## Session Info
+
+```{r session-info}
+sessionInfo()
+```

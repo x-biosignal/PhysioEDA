@@ -1,0 +1,306 @@
+---
+title: "Event-Related SCR Analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Event-Related SCR Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+## Introduction
+
+Event-related skin conductance response (ER-SCR) analysis examines phasic EDA
+changes that are time-locked to experimental events (e.g., stimulus
+presentations, decisions, or feedback). This is the most common paradigm in
+psychophysiology research using EDA.
+
+This vignette demonstrates how to use PhysioEDA to perform event-related SCR
+analysis, from data preparation through statistical summary of event-locked
+responses.
+
+## Overview of the ER-SCR Workflow
+
+The typical event-related SCR analysis pipeline consists of:
+
+1. Load or simulate EDA data with event markers
+2. Preprocess the signal (filter, artifact correction)
+3. Decompose into tonic and phasic components
+4. Extract event-related SCR features
+5. Summarize and analyze results
+
+## Preparing Data with Events
+
+For event-related analysis, the PhysioExperiment object must contain event
+markers. These can be imported from experimental software or added manually.
+
+```{r create-data}
+library(PhysioEDA)
+
+# Generate simulated EDA with 4 stimulus events
+x <- make_eda_with_scr(n_time = 6000, sr = 10, n_events = 4)
+
+# Inspect the events
+events <- getEvents(x)
+events
+```
+
+### Adding Events Manually
+
+If your data does not already contain events, you can add them using
+`setEvents()`:
+
+```{r add-events}
+library(PhysioCore)
+
+x_plain <- make_eda(n_time = 6000, sr = 10)
+
+# Define stimulus events
+x_plain <- setEvents(x_plain, PhysioEvents(
+  onset = c(60, 120, 240, 360),
+  duration = c(0.5, 0.5, 0.5, 0.5),
+  type = c("stimulus", "stimulus", "stimulus", "stimulus"),
+  value = c("CS+", "CS-", "CS+", "CS-")
+))
+```
+
+## Preprocessing for ER-SCR
+
+The preprocessing steps are the same as for general EDA analysis: filtering and
+artifact correction. It is important to complete preprocessing before
+decomposition.
+
+```{r preprocess}
+# Lowpass filter to remove noise
+x <- edaFilter(x, type = "lowpass", cutoff = 1.0)
+
+# Detect and correct artifacts
+x <- edaArtifact(x, correct = "interpolate")
+```
+
+## Decomposition
+
+For event-related analysis, the Continuous Decomposition Analysis (CDA) method
+is recommended as it provides a physiologically meaningful driver signal.
+
+```{r decompose}
+x <- edaDecompose(x, method = "cda", tau1 = 0.75, tau2 = 2.0)
+
+# Verify that tonic and phasic assays exist
+SummarizedExperiment::assayNames(x)
+```
+
+## Event-Related SCR Extraction
+
+The `edaErscr()` function is the core of event-related analysis. For each
+event, it searches for an SCR onset within a specified latency window and
+extracts amplitude, latency, rise time, and 50% recovery time.
+
+### Understanding the Parameters
+
+- **onset_window**: The valid latency range (in seconds) after event onset in
+  which an SCR onset must occur to be considered event-related. The default
+  `c(1, 4)` reflects the typical 1-4 second latency of sympathetic responses.
+- **peak_window**: The minimum and maximum time from SCR onset to its peak
+  (default: `c(0.5, 5)`).
+- **amplitude_min**: The minimum amplitude threshold for a valid SCR (default:
+  0.01 microsiemens).
+
+```{r erscr}
+# Extract event-related SCRs
+er_results <- edaErscr(x,
+  event_type = "stimulus",
+  onset_window = c(1, 4),
+  peak_window = c(0.5, 5),
+  amplitude_min = 0.01
+)
+
+er_results
+```
+
+### Interpreting the Results
+
+The returned data.frame contains one row per event per channel with the
+following columns:
+
+| Column | Description |
+|--------|-------------|
+| `event_index` | Sequential index of the event |
+| `event_onset` | Event onset time in seconds |
+| `channel` | Channel label |
+| `scr_present` | Whether a valid SCR was detected |
+| `scr_amplitude` | SCR amplitude (peak minus onset value) |
+| `scr_latency` | Latency from event to SCR onset |
+| `scr_rise_time` | Time from SCR onset to peak |
+| `scr_recovery_time` | Time for 50% recovery from peak |
+
+## Working with ER-SCR Results
+
+### Response Rate
+
+The SCR response rate is an important measure that indicates the proportion of
+trials that elicited a detectable SCR.
+
+```{r response-rate}
+# Overall response rate
+response_rate <- mean(er_results$scr_present)
+cat("Response rate:", round(response_rate * 100, 1), "%\n")
+```
+
+### Mean Amplitude
+
+When computing mean amplitudes, a common approach is to include only trials
+with a valid SCR (responders-only) or to set non-responder amplitudes to zero.
+
+```{r amplitude}
+# Responders-only mean amplitude
+responders <- er_results[er_results$scr_present, ]
+if (nrow(responders) > 0) {
+  mean_amp <- mean(responders$scr_amplitude, na.rm = TRUE)
+  cat("Mean SCR amplitude (responders):", round(mean_amp, 3), "uS\n")
+}
+
+# All-trials mean (non-responders = 0)
+er_results$amplitude_zero <- ifelse(er_results$scr_present,
+                                     er_results$scr_amplitude, 0)
+mean_amp_all <- mean(er_results$amplitude_zero)
+cat("Mean SCR amplitude (all trials):", round(mean_amp_all, 3), "uS\n")
+```
+
+### Comparing Conditions
+
+When events have different types or values, you can compare SCR features
+across conditions.
+
+```{r compare-conditions}
+# If events have different types, filter by event type
+# Example: comparing CS+ vs CS- in a conditioning paradigm
+
+# Get event metadata
+events <- getEvents(x)
+event_df <- events@events
+
+# Merge event metadata with ER-SCR results
+er_results$event_value <- event_df$value[er_results$event_index]
+
+# Compare conditions (using base R)
+by_condition <- split(er_results, er_results$event_value)
+condition_summary <- do.call(rbind, lapply(names(by_condition), function(cond) {
+  d <- by_condition[[cond]]
+  data.frame(
+    condition = cond,
+    n_trials = nrow(d),
+    response_rate = mean(d$scr_present),
+    mean_amplitude = mean(d$scr_amplitude, na.rm = TRUE),
+    mean_latency = mean(d$scr_latency, na.rm = TRUE),
+    stringsAsFactors = FALSE
+  )
+}))
+condition_summary
+```
+
+## Visualizing Event-Related EDA
+
+### Plotting the Signal with Event Markers
+
+```{r plot-events}
+# Plot the full signal with event markers
+plotEda(x, show_events = TRUE, main = "EDA with Stimulus Events")
+
+# Zoom into a specific event window
+plotEda(x, time_range = c(50, 80), show_events = TRUE)
+```
+
+### Plotting SCR Peaks
+
+```{r plot-peaks}
+# Detect and plot all SCR peaks
+peaks <- edaPeaks(x)
+plotPeaks(x, peaks = peaks, channel = 1)
+```
+
+## Data Transformation for Statistics
+
+SCR amplitudes are typically right-skewed. Before parametric statistical tests,
+consider applying a log or square root transformation.
+
+```{r transform}
+# Log transform the amplitudes
+if (any(er_results$scr_present)) {
+  er_results$log_amplitude <- log1p(er_results$scr_amplitude)
+
+  # Or use the full-signal transform
+  x_log <- edaTransform(x, method = "log")
+}
+```
+
+## Complete Event-Related Analysis Example
+
+```{r full-example}
+library(PhysioEDA)
+
+# Step 1: Create data with events
+x <- make_eda_with_scr(n_time = 6000, sr = 10, n_events = 4)
+
+# Step 2: Preprocess
+x <- edaFilter(x, type = "lowpass", cutoff = 1.0)
+x <- edaArtifact(x, correct = "interpolate")
+
+# Step 3: Decompose
+x <- edaDecompose(x, method = "cda")
+
+# Step 4: Extract event-related SCRs
+er_results <- edaErscr(x, onset_window = c(1, 4), amplitude_min = 0.01)
+
+# Step 5: Summarize
+cat("Event-Related SCR Summary\n")
+cat("=========================\n")
+cat("Total events:", nrow(er_results), "\n")
+cat("Response rate:", round(mean(er_results$scr_present) * 100, 1), "%\n")
+if (any(er_results$scr_present)) {
+  resp <- er_results[er_results$scr_present, ]
+  cat("Mean amplitude:", round(mean(resp$scr_amplitude), 3), "uS\n")
+  cat("Mean latency:", round(mean(resp$scr_latency), 2), "s\n")
+  cat("Mean rise time:", round(mean(resp$scr_rise_time), 2), "s\n")
+}
+
+# Step 6: Visualize
+plotDecompose(x, channel = 1)
+plotEda(x, show_events = TRUE)
+```
+
+## Best Practices
+
+1. **Onset window**: Use 1-4 seconds for typical sympathetic response latencies.
+   Adjust for your paradigm if needed (e.g., shorter for startle responses).
+
+2. **Amplitude threshold**: The conventional minimum is 0.01-0.05 microsiemens.
+   Use a consistent threshold across all participants and conditions.
+
+3. **Decomposition method**: CDA is recommended for event-related analyses as
+   it provides better temporal resolution of overlapping SCRs than simple
+   highpass filtering.
+
+4. **Non-responders**: Decide a priori whether to analyze responders only or
+   to score non-responders as zero amplitude. Report which approach was used.
+
+5. **Multiple channels**: If recording from multiple sites, analyze each
+   channel separately. The results data.frame includes a channel column for
+   this purpose.
+
+## References
+
+- Bach, D.R., et al. (2010). Modelling event-related skin conductance
+  responses. *International Journal of Psychophysiology*, 75(3), 349-356.
+- Benedek, M., & Kaernbach, C. (2010). A continuous measure of phasic
+  electrodermal activity. *Journal of Neuroscience Methods*, 190(1), 80-91.
+- Boucsein, W. (2012). *Electrodermal Activity*. 2nd ed. Springer.
+
+## Session Info
+
+```{r session-info}
+sessionInfo()
+```
