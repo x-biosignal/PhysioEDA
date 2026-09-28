@@ -1,10 +1,10 @@
-# Exact cvxEDA Decomposition for a Single Channel (Greco QP)
+# cvxEDA Decomposition for a Single Channel (Greco QP)
 
 Full-signal wrapper around
 [`.cvxeda_qp_core`](https://x-biosignal.github.io/PhysioEDA/reference/dot-cvxeda_qp_core.md):
 it decimates the signal to a tractable rate for the dense quadratic
 program (electrodermal activity is slow, so a few Hz suffices), solves
-the exact cvxEDA QP, and interpolates the tonic / phasic / driver
+the cvxEDA QP numerically, and interpolates the tonic / phasic / driver
 components back to the native grid. If quadprog is unavailable, or the
 solve fails, it degrades gracefully to the Wiener approximation
 ([`.cvxeda_decompose`](https://x-biosignal.github.io/PhysioEDA/reference/dot-cvxeda_decompose.md)).

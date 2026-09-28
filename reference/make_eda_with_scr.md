@@ -3,7 +3,7 @@
 Generates a synthetic electrodermal activity (EDA) PhysioExperiment
 object with known SCR events time-locked to stimulus markers. The object
 includes regularly spaced stimulus events stored via
-[`PhysioEvents`](https://x-biosignal.github.io/PhysioCore//reference/PhysioEvents.html),
+[`PhysioEvents`](https://x-biosignal.r-universe.dev/PhysioExperiment/reference/PhysioEvents.html),
 making it suitable for testing event-related SCR analysis workflows.
 
 ## Usage
@@ -45,10 +45,10 @@ make_eda_with_scr(
 ## Value
 
 A
-[`PhysioExperiment`](https://x-biosignal.github.io/PhysioCore//reference/PhysioExperiment.html)
+[`PhysioExperiment`](https://x-biosignal.r-universe.dev/PhysioExperiment/reference/PhysioExperiment.html)
 object with a single `"raw"` assay containing simulated EDA data and
 stimulus events accessible via
-[`getEvents`](https://x-biosignal.github.io/PhysioCore//reference/getEvents.html).
+[`getEvents`](https://x-biosignal.r-universe.dev/PhysioExperiment/reference/getEvents.html).
 Each event has `type = "stimulus"` and `duration = 0.5` seconds.
 
 ## References

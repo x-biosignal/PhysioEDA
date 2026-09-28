@@ -1,8 +1,8 @@
-# Triangular (order-1) B-spline Tonic Basis for cvxEDA
+# Cubic B-spline Tonic Basis for cvxEDA
 
-Builds the triangular spline regressor matrix `B` whose columns are
-overlapping tent functions spaced every `delta_knot` seconds, following
-Greco et al. (2016). The tonic (SCL) component is modelled as
+Builds the cubic spline regressor matrix `B` by convolving a triangular
+kernel with itself. Columns are spaced every `delta_knot` seconds,
+following Greco et al. (2016). The tonic (SCL) component is modelled as
 `B %*% l + C %*% d` where `C` is a linear trend.
 
 ## Usage

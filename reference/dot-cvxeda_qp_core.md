@@ -1,4 +1,4 @@
-# Exact cvxEDA Quadratic-Program Core (Single Channel, Fixed Rate)
+# Numerical cvxEDA Quadratic-Program Core (Single Channel, Fixed Rate)
 
 Solves the Greco et al. (2016) cvxEDA convex problem for one
 standardised signal at a single sampling rate. The signal is decomposed
@@ -7,8 +7,9 @@ as `y = M q + B l + C d + noise` with a sparse non-negative driver
 `0.5 * sum((M q + B l + C d - y)^2) + alpha * sum(A q) + 0.5 * gamma * sum(l^2)`
 subject to `A q >= 0`. This is a quadratic program solved with an
 active-set solver
-([`quadprog::solve.QP`](https://rdrr.io/pkg/quadprog/man/solve.QP.html));
-the returned optimum is exact.
+([`quadprog::solve.QP`](https://rdrr.io/pkg/quadprog/man/solve.QP.html)).
+A small diagonal ridge stabilises the solve; outputs approximate the
+unregularised QP solution.
 
 ## Usage
 

@@ -92,7 +92,7 @@ edaDecompose(
 ## Value
 
 A modified
-[`PhysioExperiment`](https://x-biosignal.github.io/PhysioCore//reference/PhysioExperiment.html)
+[`PhysioExperiment`](https://x-biosignal.r-universe.dev/PhysioExperiment/reference/PhysioExperiment.html)
 with new assays:
 
 - tonic:
@@ -114,7 +114,7 @@ Decomposition parameters are stored in `metadata(x)$eda_decompose`; for
 
 ## Details
 
-Five methods are available:
+Six methods are available:
 
 - highpass:
 
@@ -139,8 +139,8 @@ Five methods are available:
 
 - cvxeda:
 
-  Exact convex optimization decomposition (Greco et al., 2016), solved
-  as a quadratic program: a cubic-knot spline tonic basis and a sparse,
+  Convex optimization decomposition (Greco et al., 2016), solved as a
+  quadratic program: a cubic-knot spline tonic basis and a sparse,
   non-negative sudomotor driver through a biexponential system, with L1
   sparsity on the driver and L2 smoothness on the tonic. Requires the
   quadprog solver; degrades gracefully to the Wiener approximation if it

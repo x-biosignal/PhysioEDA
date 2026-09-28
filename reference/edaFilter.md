@@ -49,7 +49,7 @@ edaFilter(
 ## Value
 
 A modified
-[`PhysioExperiment`](https://x-biosignal.github.io/PhysioCore//reference/PhysioExperiment.html)
+[`PhysioExperiment`](https://x-biosignal.r-universe.dev/PhysioExperiment/reference/PhysioExperiment.html)
 with filtered data stored in the `output_assay` and filter parameters
 recorded in `metadata(x)$eda_filter` (a list with `type`, `cutoff`,
 `order`, `assay_name`, and `output_assay`).

@@ -42,7 +42,7 @@ events
 ### Adding Events Manually
 
 If your data does not already contain events, you can add them using
-[`setEvents()`](https://x-biosignal.github.io/PhysioCore//reference/setEvents.html):
+[`setEvents()`](https://x-biosignal.r-universe.dev/PhysioExperiment/reference/setEvents.html):
 
 ``` r
 

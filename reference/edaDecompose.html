@@ -157,7 +157,7 @@ decay constant <code>tau2</code> to minimise the driver's negative energy
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A modified <code><a href="https://x-biosignal.github.io/PhysioCore//reference/PhysioExperiment.html" class="external-link">PhysioExperiment</a></code> with new assays:</p><dl><dt>tonic</dt>
+    <p>A modified <code><a href="https://x-biosignal.r-universe.dev/PhysioExperiment/reference/PhysioExperiment.html" class="external-link">PhysioExperiment</a></code> with new assays:</p><dl><dt>tonic</dt>
 <dd><p>The slow-varying skin conductance level (SCL) component.</p></dd>
 
 <dt>phasic</dt>
@@ -174,7 +174,7 @@ for <code>method = "cvxeda"</code> this also records the per-channel solver
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Five methods are available:</p><dl><dt>highpass</dt>
+    <p>Six methods are available:</p><dl><dt>highpass</dt>
 <dd><p>FFT-based highpass/lowpass separation at a cutoff frequency.</p></dd>
 
 <dt>median</dt>
@@ -192,7 +192,7 @@ continuous CDA driver is reduced to a sparse impulse train (one impulse
 per significant SCR) and reconvolved.</p></dd>
 
 <dt>cvxeda</dt>
-<dd><p>Exact convex optimization decomposition (Greco et al., 2016),
+<dd><p>Convex optimization decomposition (Greco et al., 2016),
 solved as a quadratic program: a cubic-knot spline tonic basis and a
 sparse, non-negative sudomotor driver through a biexponential system, with
 L1 sparsity on the driver and L2 smoothness on the tonic. Requires the
