@@ -152,3 +152,14 @@ for signal quality assessment,
 for frequency-domain filtering,
 [`edaDecompose`](https://x-biosignal.github.io/PhysioEDA/reference/edaDecompose.md)
 for tonic/phasic decomposition
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+xa <- edaArtifact(x, methods = c("threshold", "gradient"), correct = "none")
+S4Vectors::metadata(xa)$eda_artifacts$summary
+#>   channel    method n_artifacts pct
+#> 1    EDA1 threshold           0   0
+#> 2    EDA1  gradient           0   0
+```

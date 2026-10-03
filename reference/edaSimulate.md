@@ -99,3 +99,21 @@ for tonic/phasic decomposition,
 for SCR detection,
 [`edaFilter`](https://x-biosignal.github.io/PhysioEDA/reference/edaFilter.md)
 for signal filtering
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+x
+#> class: PhysioExperiment
+#> dim: 600 x 1 
+#> assays(1): raw
+#> samplingRate: 10 Hz
+#> channels(1): EDA1
+#> colData names(3): label, type, unit
+str(S4Vectors::metadata(x)$eda_truth, max.level = 1)
+#> List of 3
+#>  $ tonic : num [1:600, 1] 5.1 5.1 5.1 5.11 5.11 ...
+#>  $ phasic: num [1:600, 1] 0 0 0 0 0 0 0 0 0 0 ...
+#>  $ onsets:'data.frame':  5 obs. of  4 variables:
+```

@@ -1,5 +1,17 @@
 # Changelog
 
+## PhysioEDA 0.2.4
+
+### Documentation
+
+- Runnable `@examples` added or corrected across 27 help pages. Each
+  runs offline in seconds, writes nothing outside
+  [`tempdir()`](https://rdrr.io/r/base/tempfile.html), and is executed
+  by `R CMD check`; anything needing a device, a download or an optional
+  backend is fenced with the reason stated.
+- The README’s quick start runs as written: it attaches the package,
+  builds its own inputs, and uses only hard dependencies.
+
 ## PhysioEDA 0.2.3
 
 - [`edaDecompose()`](https://x-biosignal.github.io/PhysioEDA/reference/edaDecompose.md)

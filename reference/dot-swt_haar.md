@@ -27,3 +27,11 @@ levels plus the final smooth equals the energy of `x`.
 
 A named list `d1..dJ` (level detail coefficients) and `sJ` (level-J
 smooth), each the same length as `x`.
+
+## Examples
+
+``` r
+sw <- PhysioEDA:::.swt_haar(sin(seq(0, 4 * pi, length.out = 64)), J = 3)
+names(sw)
+#> [1] "d1" "d2" "d3" "s3"
+```

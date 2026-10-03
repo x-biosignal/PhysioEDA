@@ -105,3 +105,25 @@ for summary feature extraction,
 for peak visualization,
 [`edaErscr`](https://x-biosignal.github.io/PhysioEDA/reference/edaErscr.md)
 for event-related SCR analysis
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+x <- edaDecompose(x)
+head(edaPeaks(x))
+#>   channel onset_sample onset_sec peak_sample peak_sec  amplitude rise_time
+#> 1    EDA1            3       0.2           4      0.3 0.03436609       0.1
+#> 2    EDA1            5       0.4           7      0.6 0.01179763       0.2
+#> 3    EDA1           13       1.2          14      1.3 0.02700405       0.1
+#> 4    EDA1           17       1.6          20      1.9 0.03094935       0.3
+#> 5    EDA1           24       2.3          28      2.7 0.02815182       0.4
+#> 6    EDA1           31       3.0          32      3.1 0.01031976       0.1
+#>   recovery_time
+#> 1           0.9
+#> 2           0.6
+#> 3           0.3
+#> 4           0.4
+#> 5          39.2
+#> 6           0.2
+```

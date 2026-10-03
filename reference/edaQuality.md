@@ -85,3 +85,14 @@ for artifact detection and correction,
 for frequency-domain filtering,
 [`edaDecompose`](https://x-biosignal.github.io/PhysioEDA/reference/edaDecompose.md)
 for tonic/phasic decomposition
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+edaQuality(x)
+#>   channel mean_sc     sd_sc   min_sc   max_sc pct_negative pct_flatline
+#> 1    EDA1  5.4359 0.2101158 4.974132 5.866386            0            0
+#>   pct_artifact   snr_db quality_score quality_label
+#> 1            0 25.92914           100          good
+```

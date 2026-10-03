@@ -102,3 +102,21 @@ for tonic/phasic decomposition (run first),
 for summary feature extraction,
 [`plotPeaks`](https://x-biosignal.github.io/PhysioEDA/reference/plotPeaks.md)
 for visualizing SCR peaks
+
+## Examples
+
+``` r
+x <- make_eda_with_scr(n_time = 1200, sr = 10, n_events = 4)
+x <- edaDecompose(x)
+edaErscr(x)
+#>   event_index event_onset channel scr_present scr_amplitude scr_latency
+#> 1           1    11.99000    EDA1       FALSE            NA          NA
+#> 2           2    43.96333    EDA1        TRUE    0.03590753    1.936667
+#> 3           3    75.93667    EDA1       FALSE            NA          NA
+#> 4           4   107.91000    EDA1        TRUE    0.01773909    3.090000
+#>   scr_rise_time scr_recovery_time
+#> 1            NA                NA
+#> 2           0.2               0.5
+#> 3            NA                NA
+#> 4           0.1               0.1
+```

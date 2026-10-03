@@ -13,7 +13,7 @@ performed (via edaDecompose)."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">PhysioEDA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,6 +172,17 @@ electrodermal activity." <em>Journal of Neuroscience Methods</em>, 190(1),
 <code><a href="edaErscr.html">edaErscr</a></code> for event-related SCR analysis</p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="edaSimulate.html">edaSimulate</a></span><span class="op">(</span>n_time <span class="op">=</span> <span class="fl">600</span>, sr <span class="op">=</span> <span class="fl">10</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="edaDecompose.html">edaDecompose</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">edaFeatures</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   channel scr_count scr_rate_per_min mean_amplitude mean_scl     scl_sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    EDA1        88         88.14691     0.04732549   5.4359 0.09417425</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   auc_phasic ns_scr_count ns_scr_freq cda_nscr cda_ampsum cda_iscr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   4.696235            5    5.008347       NA         NA       NA</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

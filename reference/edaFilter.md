@@ -67,3 +67,12 @@ for decimation with anti-aliasing,
 for artifact detection and correction,
 [`edaDecompose`](https://x-biosignal.github.io/PhysioEDA/reference/edaDecompose.md)
 for tonic/phasic decomposition
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+xf <- edaFilter(x, type = "lowpass", cutoff = 1)
+SummarizedExperiment::assayNames(xf)
+#> [1] "raw"      "filtered"
+```

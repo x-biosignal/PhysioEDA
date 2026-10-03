@@ -23,3 +23,10 @@ condition `dh/dt = 0`.
 ## Value
 
 The peak time in seconds.
+
+## Examples
+
+``` r
+PhysioEDA:::.scrf_peak_time(tau1 = 0.75, tau2 = 2.0)
+#> [1] 1.176995
+```

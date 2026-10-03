@@ -23,3 +23,11 @@ the GLM.
 ## Value
 
 An `n x (k + 1)` matrix.
+
+## Examples
+
+``` r
+B <- PhysioEDA:::.drift_basis(n = 50, k = 3)
+dim(B)
+#> [1] 50  4
+```

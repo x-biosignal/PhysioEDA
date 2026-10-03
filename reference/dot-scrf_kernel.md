@@ -35,3 +35,11 @@ the signal grid for use as a GLM/DCM basis regressor kernel.
 ## Value
 
 Numeric kernel vector, scaled to unit peak absolute value.
+
+## Examples
+
+``` r
+k <- PhysioEDA:::.scrf_kernel(sr = 10)
+length(k)
+#> [1] 201
+```

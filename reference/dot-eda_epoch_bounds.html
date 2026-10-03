@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">PhysioEDA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,6 +87,17 @@
 <code>end</code> (sample indices), <code>start_sec</code>, <code>end_sec</code>.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">PhysioEDA</span><span class="fu">:::</span><span class="fu">.eda_epoch_bounds</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>, sr <span class="op">=</span> <span class="fl">10</span>, epoch_sec <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   epoch start end start_sec end_sec</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1     1  20         0     1.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2    21  40         2     3.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3    41  60         4     5.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4    61  80         6     7.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     5    81 100         8     9.9</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -46,3 +46,12 @@ Boucsein, W. (2012). *Electrodermal Activity*. 2nd ed. Springer.
 for frequency-domain filtering,
 [`edaArtifact`](https://x-biosignal.github.io/PhysioEDA/reference/edaArtifact.md)
 for artifact detection and correction
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+xd <- edaDownsample(x, target_sr = 5)
+samplingRate(xd)
+#> [1] 5
+```

@@ -71,3 +71,11 @@ for basic EDA time series plotting,
 for decomposition visualization,
 [`edaPeaks`](https://x-biosignal.github.io/PhysioEDA/reference/edaPeaks.md)
 for SCR peak detection
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+x <- edaDecompose(x)
+plotPeaks(x)
+```

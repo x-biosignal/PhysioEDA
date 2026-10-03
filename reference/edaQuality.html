@@ -11,7 +11,7 @@ overall quality score."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">PhysioEDA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -136,6 +136,16 @@ quality assessment procedures for ambulatory electrodermal activity data."
 <code><a href="edaDecompose.html">edaDecompose</a></code> for tonic/phasic decomposition</p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="edaSimulate.html">edaSimulate</a></span><span class="op">(</span>n_time <span class="op">=</span> <span class="fl">600</span>, sr <span class="op">=</span> <span class="fl">10</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">edaQuality</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   channel mean_sc     sd_sc   min_sc   max_sc pct_negative pct_flatline</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    EDA1  5.4359 0.2101158 4.974132 5.866386            0            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   pct_artifact   snr_db quality_score quality_label</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1            0 25.92914           100          good</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

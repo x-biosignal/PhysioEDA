@@ -55,3 +55,12 @@ for reversing the transformation,
 for feature extraction,
 [`edaDecompose`](https://x-biosignal.github.io/PhysioEDA/reference/edaDecompose.md)
 for tonic/phasic decomposition
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+xt <- edaTransform(x, method = "log")
+SummarizedExperiment::assayNames(xt)
+#> [1] "raw"             "log_transformed"
+```

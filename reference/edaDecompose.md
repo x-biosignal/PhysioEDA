@@ -171,3 +171,16 @@ for SCR peak detection on the phasic signal,
 for feature extraction,
 [`plotDecompose`](https://x-biosignal.github.io/PhysioEDA/reference/plotDecompose.md)
 for visualizing decomposition results
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+xd <- edaDecompose(x, method = "highpass")
+SummarizedExperiment::assayNames(xd)
+#> [1] "raw"    "tonic"  "phasic"
+# \donttest{
+# cvxEDA solves a quadratic program via the quadprog Suggests dependency
+xc <- edaDecompose(x, method = "cvxeda")
+# }
+```

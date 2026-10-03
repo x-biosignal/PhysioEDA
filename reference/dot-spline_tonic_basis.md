@@ -28,3 +28,11 @@ following Greco et al. (2016). The tonic (SCL) component is modelled as
 ## Value
 
 An `n x nB` matrix of spline regressors.
+
+## Examples
+
+``` r
+B <- PhysioEDA:::.spline_tonic_basis(n = 100, dt = 0.1, delta_knot = 5)
+dim(B)
+#> [1] 100   2
+```

@@ -11,7 +11,7 @@ automatically via edaPeaks."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">PhysioEDA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,6 +131,14 @@ available, otherwise <code>defaultAssay(x)</code>.</p></dd>
 <code><a href="edaPeaks.html">edaPeaks</a></code> for SCR peak detection</p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="edaSimulate.html">edaSimulate</a></span><span class="op">(</span>n_time <span class="op">=</span> <span class="fl">600</span>, sr <span class="op">=</span> <span class="fl">10</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="edaDecompose.html">edaDecompose</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotPeaks</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plotPeaks-1.png" alt="" width="700" height="433"></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

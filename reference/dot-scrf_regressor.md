@@ -31,3 +31,12 @@ convolved with the SCRF).
 ## Value
 
 Numeric regressor vector of length `n`.
+
+## Examples
+
+``` r
+k <- PhysioEDA:::.scrf_kernel(sr = 10)
+reg <- PhysioEDA:::.scrf_regressor(onsets = c(1, 5), n = 100, sr = 10, kern = k)
+length(reg)
+#> [1] 100
+```

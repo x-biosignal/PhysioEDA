@@ -74,3 +74,10 @@ for decomposition visualization,
 for SCR peak visualization,
 [`edaDecompose`](https://x-biosignal.github.io/PhysioEDA/reference/edaDecompose.md)
 for tonic/phasic decomposition
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+plotEda(x)
+```

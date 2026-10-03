@@ -33,3 +33,11 @@ by `r = M %*% q`.
 ## Value
 
 A list with the `n x n` matrices `A` and `M`.
+
+## Examples
+
+``` r
+m <- PhysioEDA:::.bateman_arma(n = 20, dt = 0.1, tau_rise = 0.75, tau_decay = 2.0)
+dim(m$A)
+#> [1] 20 20
+```

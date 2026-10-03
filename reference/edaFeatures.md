@@ -121,3 +121,15 @@ for tonic/phasic decomposition (run first),
 for SCR peak detection,
 [`edaErscr`](https://x-biosignal.github.io/PhysioEDA/reference/edaErscr.md)
 for event-related SCR analysis
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+x <- edaDecompose(x)
+edaFeatures(x)
+#>   channel scr_count scr_rate_per_min mean_amplitude mean_scl     scl_sd
+#> 1    EDA1        88         88.14691     0.04732549   5.4359 0.09417425
+#>   auc_phasic ns_scr_count ns_scr_freq cda_nscr cda_ampsum cda_iscr
+#> 1   4.696235            5    5.008347       NA         NA       NA
+```

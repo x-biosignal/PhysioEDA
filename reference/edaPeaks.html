@@ -11,7 +11,7 @@ peak, amplitude, rise time, and recovery time for each detected SCR."></head><bo
 
     <a class="navbar-brand me-2" href="../index.html">PhysioEDA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -157,6 +157,27 @@ electrodermal activity." <em>Journal of Neuroscience Methods</em>, 190(1),
 <code><a href="edaErscr.html">edaErscr</a></code> for event-related SCR analysis</p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="edaSimulate.html">edaSimulate</a></span><span class="op">(</span>n_time <span class="op">=</span> <span class="fl">600</span>, sr <span class="op">=</span> <span class="fl">10</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="edaDecompose.html">edaDecompose</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">edaPeaks</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   channel onset_sample onset_sec peak_sample peak_sec  amplitude rise_time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    EDA1            3       0.2           4      0.3 0.03436609       0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    EDA1            5       0.4           7      0.6 0.01179763       0.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    EDA1           13       1.2          14      1.3 0.02700405       0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    EDA1           17       1.6          20      1.9 0.03094935       0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    EDA1           24       2.3          28      2.7 0.02815182       0.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    EDA1           31       3.0          32      3.1 0.01031976       0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   recovery_time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           0.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           0.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           0.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          39.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           0.2</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

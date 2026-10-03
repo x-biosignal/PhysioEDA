@@ -11,7 +11,7 @@ SCRs are modeled as biexponential impulse responses (Bateman function)."></head>
 
     <a class="navbar-brand me-2" href="../index.html">PhysioEDA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,6 +151,23 @@ electrodermal activity." <em>Journal of Neuroscience Methods</em>, 190(1),
 <code><a href="edaFilter.html">edaFilter</a></code> for signal filtering</p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">edaSimulate</span><span class="op">(</span>n_time <span class="op">=</span> <span class="fl">600</span>, sr <span class="op">=</span> <span class="fl">10</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> class: PhysioExperiment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dim: 600 x 1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> assays(1): raw</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> samplingRate: 10 Hz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> channels(1): EDA1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> colData names(3): label, type, unit</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">S4Vectors</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Annotated-class.html" class="external-link">metadata</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">eda_truth</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ tonic : num [1:600, 1] 5.1 5.1 5.1 5.11 5.11 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ phasic: num [1:600, 1] 0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ onsets:'data.frame':	5 obs. of  4 variables:</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

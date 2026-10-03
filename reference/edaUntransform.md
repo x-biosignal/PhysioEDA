@@ -42,3 +42,13 @@ Boucsein, W. (2012). *Electrodermal Activity*. 2nd ed. Springer.
 for applying the initial transformation,
 [`edaDecompose`](https://x-biosignal.github.io/PhysioEDA/reference/edaDecompose.md)
 for tonic/phasic decomposition
+
+## Examples
+
+``` r
+x <- edaSimulate(n_time = 600, sr = 10, seed = 1)
+xt <- edaTransform(x, method = "log")
+xu <- edaUntransform(xt)
+SummarizedExperiment::assayNames(xu)
+#> [1] "raw"             "log_transformed" "untransformed"  
+```
