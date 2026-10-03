@@ -1,0 +1,58 @@
+{
+  "record": "d1.5_g10_n0.05_s101",
+  "source": "NeuroKit2 0.2.13 cvxEDA",
+  "neurokit2": "0.2.13",
+  "cvxopt": "1.3.3",
+  "source_url": "https://neuropsychology.github.io/NeuroKit/_modules/neurokit2/eda/eda_phasic.html",
+  "reference_doi": "10.1109/TBME.2015.2474131",
+  "source_function_sha256": "b18db6c81a515e9ae8397e504b00cb42c3273fcc97805e94fd1e591e2ffab64a",
+  "input_source": "publication/results/eda_reference_validation/inputs.csv",
+  "input_source_sha256": "bb6e5269f036847fd3e908b282986feb4d2950dc2ce492bd2e5da586a7c7d1c8",
+  "fixture_sha256": "80c0744fe8fd9075db072f609d7732f74e50c78cb22f2643e19face5ba1d525f",
+  "parameters": {
+    "sampling_rate": 4,
+    "tau1": 0.7,
+    "delta_knot": 10,
+    "alpha": 0.0008,
+    "gamma": 0.01,
+    "reltol": 1e-12
+  },
+  "tau0_cases": [
+    2.0,
+    4.0
+  ],
+  "additional_cvxopt_solver_options": {
+    "abstol": 1e-12,
+    "feastol": 1e-12
+  },
+  "input_mean": 5.140611610609509,
+  "input_sample_sd": 0.12991984122651554,
+  "input_ddof": 1,
+  "output_scaling": "tonic * sampleSD + mean; phasic * sampleSD",
+  "physio_tau_mapping": "Physio tau1=.7 (rise); tau2=NeuroKit tau0 (decay)",
+  "notes": "Independent reference outputs, not known physiological truth. Input record has synthetic true decay1.5, interval10, noiseSD.05, seed101; tau2 is fixed reference and tau4 selected by residual SSE. Detects overly large diagonal ridge bias in weakly identified historical boundary formulation.",
+  "accuracy_diagnostic": [
+    {
+      "decay": 2.0,
+      "phasic_rmse": 2.1926154896558887,
+      "phasic_trend_slope": 0.043666431014421254,
+      "phasic_linear_r2": 0.8881787843211846,
+      "phasic_min": 0.0,
+      "phasic_max": 3.304682420961173,
+      "tonic_min": 1.7265669358578868,
+      "tonic_max": 4.937619435232267,
+      "reconstruction_rmse": 0.03040917589408451
+    },
+    {
+      "decay": 4.0,
+      "phasic_rmse": 5.651624524298159,
+      "phasic_trend_slope": 0.14969265284503175,
+      "phasic_linear_r2": 0.9932234392300907,
+      "phasic_min": 0.0,
+      "phasic_max": 9.478874036530142,
+      "tonic_min": -4.44730514300182,
+      "tonic_max": 4.950784248504539,
+      "reconstruction_rmse": 0.02926198445832225
+    }
+  ]
+}

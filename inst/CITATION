@@ -1,0 +1,12 @@
+citHeader("To cite PhysioEDA in publications use:")
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "PhysioEDA: Electrodermal Activity Analysis for PhysioExperiment Objects",
+  author   = person("Yusuke", "Matsui"),
+  year     = "2026",
+  note     = paste("R package version", meta$Version),
+  url      = "https://github.com/x-biosignal/PhysioEDA"
+  # doi    = "10.5281/zenodo.XXXXXXX"  # add once minted
+)
+
